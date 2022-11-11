@@ -37,7 +37,43 @@ layout = dbc.Col([
     dbc.Modal([
         dbc.ModalHeader(dbc.ModalTitle('Adicionar receita')),
         dbc.ModalBody([
+            dbc.Row([
+                dbc.Col([
+                    dbc.Label('Descrição: '),
+                    dbc.Input(placeholder="Ex.: dividendo da bolsa, herança...", id="text-receita")
+                ], width=6),
+                dbc.Col([
+                    dbc.Label("Valor: "),
+                    dbc.Input(placeholder="100.00", id="valor_receita", value="")
+                ], width=6)
+            ]),
 
+            dbc.Row([
+                dbc.Col([
+                    dbc.Label("Data: "),
+                    dcc.DatePickerSingle(id='date-receitas', 
+                        min_date_allowed=date(2022, 1, 1),
+                        max_date_allowed=date(2030, 12, 31),
+                        date=datetime.today(),
+                        style={"with": "100%"}
+                    )
+                ], width=4),
+
+                dbc.Col([
+                    dbc.Label("Extras"),
+                    dbc.Checklist(
+                        options=[],
+                        value=[],
+                        id='switches-input-receita',
+                        switch=True
+                    )
+                ], width=4),
+
+                dbc.Col([
+                    html.Label('Categoria da receita'),
+                    dbc.Select(id='select_receita', options=[], value=[])
+                ], width=4)
+            ], style={'margin-top': '25px'})
         ])
     ], id='modal-novo-receita'),
 
@@ -46,7 +82,7 @@ layout = dbc.Col([
     dbc.Modal([
         dbc.ModalHeader(dbc.ModalTitle('Adicionar despesa')),
         dbc.ModalBody([
-            
+
         ])
     ], id='modal-novo-despesa'),
 
@@ -61,9 +97,8 @@ layout = dbc.Col([
 ])
 
 
-
 # ================= Callbacks #================= #
-#Pop-up receita
+# Pop-up receita
 @app.callback(
     Output('modal-novo-receita', 'is_open'),
     Input('open-novo-receita', 'n_clicks'),
@@ -73,7 +108,9 @@ def toogle_modal(n1, is_open):
     if n1:
         return not is_open
 
-#Pop-up despesa
+# Pop-up despesa
+
+
 @app.callback(
     Output('modal-novo-despesa', 'is_open'),
     Input('open-novo-despesa', 'n_clicks'),
