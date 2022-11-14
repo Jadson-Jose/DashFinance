@@ -58,7 +58,7 @@ layout = dbc.Col([
                         min_date_allowed=date(2022, 1, 1),
                         max_date_allowed=date(2030, 12, 31),
                         date=datetime.today(),
-                        style={"with": "100%"}
+                        style={"width": "100%"}
                     )
                 ], width=4),
 
@@ -135,90 +135,103 @@ layout = dbc.Col([
 
     # Seção Despesa --------------------------------------------
     dbc.Modal([
-        dbc.ModalHeader(dbc.ModalTitle('Adicionar despesa')),
+        dbc.ModalHeader(dbc.ModalTitle('Adicionar Despesa')),
         
-        dbc.ModalBody([
-            dbc.Row([
-                dbc.Col([
-                    dbc.Label('Descrição: '),
-                    dbc.Input(
-                        placeholder="Ex.: Despesas da bolsa...", id="text-despesa"
-                    )
-                ], width=6),
-
-                dbc.Col([
-                    dbc.Label("Valor: "),
-                    dbc.Input(placeholder="100.00",
-                              id="Valor_despesa", value="")
-                ], width=6)
-            ]),
-
-
-        ]),
-
-        dbc.Row([
-            dbc.Col([
-                dbc.Label("Data: "),
-                dcc.DatePickerSingle(id='Data-despesas',
-                    min_date_allowed=date(2022, 1, 1),
-                    max_date_allowed=date(2030, 12, 31),
-                    date=datetime.today(),
-                    style={"width": "100%"}
-                )
-            ], width=4),
-
-            dbc.Col([
-                dbc.Label("Extras"),
-                dbc.Checklist(
-                    options=[],
-                    value=[],
-                    id='swiches-input-receita',
-                    switch=True
-                ),
-            ], width=4),
-
-            dbc.Col([
-                html.Label('Categoria da despesa'),
-                dbc.Select(id='select_despesa', options=[], value=[])
-            ], width=4)
-        ], style={'margin-top': '25px'}),
-
-        dbc.Row([
-          dbc.Accordion([
-            dbc.AccordionItem(children=[
+            dbc.ModalBody([
+                
                 dbc.Row([
-                    
                     dbc.Col([
-                        html.Legend("Adicionar categoria", style={'color': 'green'}),
-                        dbc.Input(type="text", placeholder="Nova categoria...", id="imput-add-despesa", value=""),
-                        html.Br(),
-                        dbc.Button("adicionar", className="btn btn-success", id="add-category-despesa", style={"margin-top": "20px"}),
-                        html.Br(),
-                        html.Div(id="category-div-add-despesa", style={})
+                        dbc.Label('Descrição: '),
+                        dbc.Input(
+                            placeholder="Ex.: Despesas da bolsa...", id="text-despesa"
+                        )
                     ], width=6),
 
                     dbc.Col([
-                        html.Legend("Excluir categorias", style={'color': 'red'}),
+                        dbc.Label("Valor: "),
+                        dbc.Input(placeholder="100.00",
+                              id="Valor_despesa", value="")
+                    ], width=6)
+                ]),
+
+
+        
+
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Label("Data: "),
+                        dcc.DatePickerSingle(id='Data-despesas',
+                            min_date_allowed=date(2022, 1, 1),
+                            max_date_allowed=date(2030, 12, 31),
+                            date=datetime.today(),
+                            style={"width": "100%"}
+                        )
+                    ], width=4),
+
+                    dbc.Col([
+                        dbc.Label("Extras"),
                         dbc.Checklist(
-                            id="checklist-selected-style-despesa",
                             options=[],
                             value=[],
-                            label_checked_style={"color": "red"},
-                            input_checked_style={"backgroundColor": "orange", "borderColor": "#ea6258"},   
+                            id='swiches-input-receita',
+                            switch=True
                         ),
+                    ], width=4),
 
-                        dbc.Button("Remover", color="warning", id="remove-category-despesa", style={"margin-top": "20px"}),
-                    ], width=6)
+                    dbc.Col([
+                        html.Label('Categoria da despesa'),
+                        dbc.Select(id='select_despesa', options=[], value=[])
+                    ], width=4)
+                
+                ], style={'margin-top': '25px'}),
+
+                dbc.Row([
+                    dbc.Accordion([
+                        dbc.AccordionItem(children=[
+                            dbc.Row([
+                    
+                                dbc.Col([
+                                    html.Legend("Adicionar categoria", style={'color': 'green'}),
+                                    dbc.Input(type="text", placeholder="Nova categoria...", id="imput-add-despesa", value=""),
+                                    html.Br(),
+                                    dbc.Button("adicionar", className="btn btn-success", id="add-category-despesa", style={"margin-top": "20px"}),
+                                    html.Br(),
+                                    html.Div(id="category-div-add-despesa", style={})
+                                ], width=6),
+
+                                dbc.Col([
+                                    html.Legend("Excluir categorias", style={'color': 'red'}),
+                                    
+                                    dbc.Checklist(
+                                        id="checklist-selected-style-despesa",
+                                        options=[],
+                                        value=[],
+                                        label_checked_style={"color": "red"},
+                                        input_checked_style={"backgroundColor": "orange", "borderColor": "#ea6258"},   
+                                    ),
+
+                                dbc.Button("Remover", color="warning", id="remove-category-despesa", style={"margin-top": "20px"}),
+                            ], width=6)
+                        ])
+                    ], title="Adicionar/Remover Categorias")
+                ], flush=True, start_collapsed=True, id='accordion-despesa'),
+
+                dbc.ModalFooter([
+                    dbc.Button("Adionar despesa", color="warning", id="salvar_despesa",value=""),
+                    dbc.Popover(dbc.Popover("Despesa Salva"), target="Salvar_despesa", placement="left", trigger="click")
                 ])
-            ], title="Adicionar/Remover Categorias")
-          ], flush=True, start_collapsed=True, id='accordion-despesa'),
+            ], style={"margin-top" : "25px"}),
 
-          dbc.ModalFooter([
-            dbc.Button("Adionar despesa", color="warning", id="salvar_despesa",value="")
-          ])
-        ])
+        ]),
 
-    ], id='modal-novo-despesa'),
+    ], 
+    style={"backgroundColor": "rgba(17, 140, 79, 0.05)"},
+    id="modal-novo-despesa",
+    size="lg",
+    is_open=False,
+    centered=True,
+    backdrop=True
+    ),
 
     # Seção Nav --------------------------------------------
     html.Hr(),
